@@ -39,9 +39,14 @@ impl Server {
         let url = std::env::var("TOOL_DASHBOARD")
             .expect("You should set the TOOL_DASHBOARD env variable");
 
-        self.post_updates(&client, &url)?;
+        if let Err(e) = self.post_updates(&client, &url) {
+            eprintln!("{} Failed to post updates: {}", "✗".red(), e);
+        }
+
         while rx.recv_timeout(Duration::from_secs(3)).is_err() {
-            self.post_updates(&client, &url)?;
+            if let Err(e) = self.post_updates(&client, &url) {
+                eprintln!("{} Failed to post updates: {}", "✗".red(), e);
+            }
         }
 
         println!("Server Stopped");
