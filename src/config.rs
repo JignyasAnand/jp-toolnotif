@@ -40,7 +40,9 @@ impl Config {
                     status_file: if path.extension().is_some() {
                         path.display().to_string()
                     } else {
-                        Self::discover_status_file(&path).expect("No Status file found")
+                        path.join(Self::discover_status_file(&path).expect("No Status file found"))
+                            .display()
+                            .to_string()
                     },
                 },
             );
