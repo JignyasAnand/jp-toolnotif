@@ -5,7 +5,6 @@ mod status_types;
 
 use std::fs;
 
-
 use clap::Parser;
 
 use crate::cli::{Cli, Commands};
